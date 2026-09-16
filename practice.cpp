@@ -84,52 +84,97 @@
 
 //     return 0;
 // }
+// #include <iostream>
+// using namespace std;
+
+// class Patient
+// {
+//     int patientId;
+//     string patientName;
+
+//     static int activePatients;
+
+// public:
+//     Patient(int id, string name)
+//     {
+//         patientId = id;
+//         patientName = name;
+//         activePatients++;
+//     }
+
+//     ~Patient()
+//     {
+//         activePatients--;
+//     }
+
+//     static void showActivePatients()
+//     {
+//         cout << "Active Patients: " << activePatients << endl;
+//     }
+// };
+
+// int Patient::activePatients = 0;
+
+// int main()
+// {
+//     Patient p1(101, "Rahul");
+//     Patient p2(102, "Aman");
+
+//     Patient::showActivePatients();
+
+//     {
+//         Patient p3(103, "Rohit");
+
+//         Patient::showActivePatients();
+//     } // p3 destroyed here
+
+//     cout << "After local object is destroyed:" << endl;
+//     Patient::showActivePatients();
+
+//     return 0;
+// }  
 #include <iostream>
 using namespace std;
 
-class Patient
+class University
 {
-    int patientId;
-    string patientName;
-
-    static int activePatients;
+private:
+    string universityName;
 
 public:
-    Patient(int id, string name)
+    University(string name)
     {
-        patientId = id;
-        patientName = name;
-        activePatients++;
+        universityName = name;
     }
 
-    ~Patient()
+    class Department
     {
-        activePatients--;
-    }
+        string departmentName;
+        int studentCount;
 
-    static void showActivePatients()
-    {
-        cout << "Active Patients: " << activePatients << endl;
-    }
+    public:
+        Department(string name, int count)
+        {
+            departmentName = name;
+            studentCount = count;
+        }
+
+        void display(University &u)
+        {
+            cout << "University: " << u.universityName << endl;
+            cout << "Department: " << departmentName << endl;
+            cout << "Student Count: " << studentCount << endl;
+        }
+    };
 };
-
-int Patient::activePatients = 0;
 
 int main()
 {
-    Patient p1(101, "Rahul");
-    Patient p2(102, "Aman");
+    University u("ABES Engineering College");
 
-    Patient::showActivePatients();
+    University::Department d("Computer Science", 120);
 
-    {
-        Patient p3(103, "Rohit");
-
-        Patient::showActivePatients();
-    } // p3 destroyed here
-
-    cout << "After local object is destroyed:" << endl;
-    Patient::showActivePatients();
+    d.display(u);
 
     return 0;
-}  
+}
