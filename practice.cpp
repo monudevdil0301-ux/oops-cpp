@@ -178,73 +178,159 @@
 
 //     return 0;
 // }
+// #include <iostream>
+// using namespace std;
+
+// class Employee
+// {
+//     int employeeId;
+//     string name;
+//     float salary;
+
+// public:
+//     // Default constructor
+//     Employee()
+//     {
+//         employeeId = 0;
+//         name = "Unknown";
+//         salary = 0;
+//     }
+
+//     // Parameterized constructor
+//     Employee(int id, string n, float s)
+//     {
+//         employeeId = id;
+//         name = n;
+//         salary = s;
+//     }
+
+//     // Copy constructor
+//     Employee(const Employee &e)
+//     {
+//         employeeId = e.employeeId;
+//         name = e.name;
+//         salary = e.salary;
+//     }
+
+//     // Const member function
+//     void display() const
+//     {
+//         cout << "Employee ID: " << employeeId << endl;
+//         cout << "Name: " << name << endl;
+//         cout << "Salary: " << salary << endl;
+//     }
+
+//     void updateSalary(float newSalary)
+//     {
+//         salary = newSalary;
+//     }
+// };
+
+// int main()
+// {
+//     const Employee e1(101, "Rahul", 50000);
+
+//     cout << "Constant Employee Object:" << endl;
+//     e1.display();
+
+//     // e1.updateSalary(60000); 
+//     // Error: const object cannot call non-const function
+
+//     Employee e2 = e1;  // Copy constructor
+
+//     cout << "\nCopied Employee Object:" << endl;
+//     e2.display();
+
+//     e2.updateSalary(60000);
+
+//     cout << "\nAfter Salary Update:" << endl;
+//     e2.display();
+
+//     return 0;
+// }
 #include <iostream>
 using namespace std;
 
-class Employee
+class ResultAnalyzer;
+
+class StudentResult
 {
-    int employeeId;
+private:
+    int rollNo;
     string name;
-    float salary;
+    float marks1, marks2, marks3;
+
+    static int totalStudents;
 
 public:
-    // Default constructor
-    Employee()
+    StudentResult(int roll, string n, float m1, float m2, float m3)
     {
-        employeeId = 0;
-        name = "Unknown";
-        salary = 0;
-    }
-
-    // Parameterized constructor
-    Employee(int id, string n, float s)
-    {
-        employeeId = id;
+        rollNo = roll;
         name = n;
-        salary = s;
+        marks1 = m1;
+        marks2 = m2;
+        marks3 = m3;
+
+        totalStudents++;
     }
 
-    // Copy constructor
-    Employee(const Employee &e)
+    friend class ResultAnalyzer;
+
+    static void showTotalStudents()
     {
-        employeeId = e.employeeId;
-        name = e.name;
-        salary = e.salary;
+        cout << "Total Students: " << totalStudents << endl;
     }
 
-    // Const member function
-    void display() const
+    ~StudentResult()
     {
-        cout << "Employee ID: " << employeeId << endl;
-        cout << "Name: " << name << endl;
-        cout << "Salary: " << salary << endl;
+        cout << "StudentResult object destroyed for "
+             << name << endl;
     }
+};
 
-    void updateSalary(float newSalary)
+int StudentResult::totalStudents = 0;
+
+class ResultAnalyzer
+{
+public:
+    void analyze(StudentResult &s)
     {
-        salary = newSalary;
+        float total = s.marks1 + s.marks2 + s.marks3;
+        float percentage = total / 3;
+
+        cout << "Roll No: " << s.rollNo << endl;
+        cout << "Name: " << s.name << endl;
+        cout << "Total Marks: " << total << endl;
+        cout << "Percentage: " << percentage << "%" << endl;
+
+        if (s.marks1 >= 33 &&
+            s.marks2 >= 33 &&
+            s.marks3 >= 33)
+        {
+            cout << "Result: PASS" << endl;
+        }
+        else
+        {
+            cout << "Result: FAIL" << endl;
+        }
     }
 };
 
 int main()
 {
-    const Employee e1(101, "Rahul", 50000);
+    StudentResult s1(101, "Rahul", 80, 75, 90);
+    StudentResult s2(102, "Aman", 60, 25, 70);
 
-    cout << "Constant Employee Object:" << endl;
-    e1.display();
+    ResultAnalyzer r;
 
-    // e1.updateSalary(60000); 
-    // Error: const object cannot call non-const function
+    cout << "Student 1 Result:" << endl;
+    r.analyze(s1);
 
-    Employee e2 = e1;  // Copy constructor
+    cout << "\nStudent 2 Result:" << endl;
+    r.analyze(s2);
 
-    cout << "\nCopied Employee Object:" << endl;
-    e2.display();
-
-    e2.updateSalary(60000);
-
-    cout << "\nAfter Salary Update:" << endl;
-    e2.display();
+    cout << endl;
+    StudentResult::showTotalStudents();
 
     return 0;
 }
