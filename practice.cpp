@@ -133,48 +133,118 @@
 
 //     return 0;
 // }  
+// #include <iostream>
+// using namespace std;
+
+// class University
+// {
+// private:
+//     string universityName;
+
+// public:
+//     University(string name)
+//     {
+//         universityName = name;
+//     }
+
+//     class Department
+//     {
+//         string departmentName;
+//         int studentCount;
+
+//     public:
+//         Department(string name, int count)
+//         {
+//             departmentName = name;
+//             studentCount = count;
+//         }
+
+//         void display(University &u)
+//         {
+//             cout << "University: " << u.universityName << endl;
+//             cout << "Department: " << departmentName << endl;
+//             cout << "Student Count: " << studentCount << endl;
+//         }
+//     };
+// };
+
+// int main()
+// {
+//     University u("ABES Engineering College");
+
+//     University::Department d("Computer Science", 120);
+
+//     d.display(u);
+
+//     return 0;
+// }
 #include <iostream>
 using namespace std;
 
-class University
+class Employee
 {
-private:
-    string universityName;
+    int employeeId;
+    string name;
+    float salary;
 
 public:
-    University(string name)
+    // Default constructor
+    Employee()
     {
-        universityName = name;
+        employeeId = 0;
+        name = "Unknown";
+        salary = 0;
     }
 
-    class Department
+    // Parameterized constructor
+    Employee(int id, string n, float s)
     {
-        string departmentName;
-        int studentCount;
+        employeeId = id;
+        name = n;
+        salary = s;
+    }
 
-    public:
-        Department(string name, int count)
-        {
-            departmentName = name;
-            studentCount = count;
-        }
+    // Copy constructor
+    Employee(const Employee &e)
+    {
+        employeeId = e.employeeId;
+        name = e.name;
+        salary = e.salary;
+    }
 
-        void display(University &u)
-        {
-            cout << "University: " << u.universityName << endl;
-            cout << "Department: " << departmentName << endl;
-            cout << "Student Count: " << studentCount << endl;
-        }
-    };
+    // Const member function
+    void display() const
+    {
+        cout << "Employee ID: " << employeeId << endl;
+        cout << "Name: " << name << endl;
+        cout << "Salary: " << salary << endl;
+    }
+
+    void updateSalary(float newSalary)
+    {
+        salary = newSalary;
+    }
 };
 
 int main()
 {
-    University u("ABES Engineering College");
+    const Employee e1(101, "Rahul", 50000);
 
-    University::Department d("Computer Science", 120);
+    cout << "Constant Employee Object:" << endl;
+    e1.display();
 
-    d.display(u);
+    // e1.updateSalary(60000); 
+    // Error: const object cannot call non-const function
+
+    Employee e2 = e1;  // Copy constructor
+
+    cout << "\nCopied Employee Object:" << endl;
+    e2.display();
+
+    e2.updateSalary(60000);
+
+    cout << "\nAfter Salary Update:" << endl;
+    e2.display();
 
     return 0;
 }
